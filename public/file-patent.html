@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Patent - Patent Filing Platform</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="app-page">
+
+<!-- NAVIGATION -->
+<nav class="app-navbar">
+    <div class="nav-container">
+        <a href="home.html" class="nav-logo">📄 Patent Platform</a>
+        <div class="nav-tabs">
+            <a href="file-patent.html" class="nav-tab active">📝 File Patent</a>
+            <a href="legal-help.html" class="nav-tab">⚖️ Legal Help</a>
+            <a href="manage-patents.html" class="nav-tab">📋 Manage Patents</a>
+            <a href="search-patents.html" class="nav-tab">🔍 Search Patents</a>
+        </div>
+        <div class="nav-user">
+            <span id="userName">User</span>
+            <button onclick="logout()" class="btn-logout">Logout</button>
+        </div>
+    </div>
+</nav>
+
+<!-- MAIN CONTENT -->
+<main class="app-main">
+    <div class="app-container">
+        
+        <!-- PAGE HEADER -->
+        <div class="page-header">
+            <h1>📝 File a New Patent</h1>
+            <p>Complete the form below to start your patent application. Our AI will guide you through each step.</p>
+        </div>
+
+        <!-- FILING FORM -->
+        <div class="filing-form-container">
+            
+            <!-- PROGRESS INDICATOR -->
+            <div class="progress-section">
+                <div class="progress-steps">
+                    <div class="progress-step active" data-step="1">
+                        <div class="step-circle">1</div>
+                        <span>Basic Info</span>
+                    </div>
+                    <div class="progress-step" data-step="2">
+                        <div class="step-circle">2</div>
+                        <span>Description</span>
+                    </div>
+                    <div class="progress-step" data-step="3">
+                        <div class="step-circle">3</div>
+                        <span>Claims</span>
+                    </div>
+                    <div class="progress-step" data-step="4">
+                        <div class="step-circle">4</div>
+                        <span>Review</span>
+                    </div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 25%"></div>
+                </div>
+            </div>
+
+            <!-- FORM STEPS -->
+            <form id="filingForm" class="filing-form">
+                
+                <!-- STEP 1: BASIC INFO -->
+                <div class="form-step active" data-step="1">
+                    <h2>Step 1: Basic Information</h2>
+                    
+                    <div class="form-group">
+                        <label for="patentType">Patent Type</label>
+                        <select id="patentType" name="patentType" required>
+                            <option value="">Select patent type...</option>
+                            <option value="utility">Utility Patent (Inventions, Processes)</option>
+                            <option value="design">Design Patent (Ornamental Designs)</option>
+                            <option value="plant">Plant Patent (New Plant Varieties)</option>
+                        </select>
+                        <small>Not sure? Most inventions are Utility Patents.</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="title">Invention Title</label>
+                        <input type="text" id="title" name="title" required 
+                               placeholder="e.g., Smart Water Bottle with Hydration Tracking">
+                        <small>Be descriptive but concise (5-10 words)</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="abstract">Abstract (Brief Summary)</label>
+                        <textarea id="abstract" name="abstract" rows="4" required
+                                  placeholder="Provide a concise description of your invention (100-150 words)"></textarea>
+                        <small>Describe what your invention is and what it does</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="category">Technology Category</label>
+                        <select id="category" name="category" required>
+                            <option value="">Select category...</option>
+                            <option value="software">Software & Apps</option>
+                            <option value="hardware">Hardware & Electronics</option>
+                            <option value="medical">Medical Devices</option>
+                            <option value="mechanical">Mechanical Engineering</option>
+                            <option value="chemical">Chemical & Materials</option>
+                            <option value="biotech">Biotechnology</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- STEP 2: DESCRIPTION -->
+                <div class="form-step" data-step="2">
+                    <h2>Step 2: Detailed Description</h2>
+                    
+                    <div class="form-group">
+                        <label for="problem">What Problem Does It Solve?</label>
+                        <textarea id="problem" name="problem" rows="4" required
+                                  placeholder="Describe the problem or need that your invention addresses"></textarea>
+                        <small>Be specific about the challenges people face without your invention</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="audience">Target Users/Market</label>
+                        <textarea id="audience" name="audience" rows="3" required
+                                  placeholder="Who will use this invention? What industries or markets?"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Technical Description</label>
+                        <textarea id="description" name="description" rows="6" required
+                                  placeholder="Provide a detailed technical explanation of how your invention works"></textarea>
+                        <small>Include materials, components, processes, or methods</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="advantages">Advantages Over Existing Solutions</label>
+                        <textarea id="advantages" name="advantages" rows="4" required
+                                  placeholder="What makes your invention better than existing alternatives?"></textarea>
+                    </div>
+
+                    <div class="ai-assist-box">
+                        <div class="ai-icon">🤖</div>
+                        <div>
+                            <h4>AI Writing Assistant</h4>
+                            <p>Our AI can help improve your technical description</p>
+                            <button type="button" class="btn-secondary btn-sm" onclick="improveDescription()">
+                                Enhance Description
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STEP 3: CLAIMS -->
+                <div class="form-step" data-step="3">
+                    <h2>Step 3: Patent Claims</h2>
+                    
+                    <div class="info-box">
+                        <strong>What are Claims?</strong>
+                        <p>Claims define the legal scope of your patent protection. They describe what aspects of your invention are novel and deserve protection.</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="claims">Patent Claims</label>
+                        <textarea id="claims" name="claims" rows="10" required
+                                  placeholder="Claims will appear here..."></textarea>
+                        <small>Claims should be clear, specific, and describe novel aspects</small>
+                    </div>
+
+                    <div class="ai-assist-box">
+                        <div class="ai-icon">✨</div>
+                        <div>
+                            <h4>AI Claims Generator</h4>
+                            <p>Let our AI generate professional patent claims based on your description</p>
+                            <button type="button" class="btn-primary btn-sm" onclick="generateClaims()">
+                                🤖 Generate Claims
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="drawings">Upload Drawings/Diagrams (Optional)</label>
+                        <input type="file" id="drawings" name="drawings" accept="image/*,.pdf" multiple>
+                        <small>Accepted formats: JPG, PNG, PDF (Max 10MB each)</small>
+                    </div>
+                </div>
+
+                <!-- STEP 4: REVIEW -->
+                <div class="form-step" data-step="4">
+                    <h2>Step 4: Review & Submit</h2>
+                    
+                    <div class="review-section">
+                        <h3>Review Your Application</h3>
+                        
+                        <div class="review-item">
+                            <strong>Patent Type:</strong>
+                            <p id="reviewPatentType"></p>
+                        </div>
+                        
+                        <div class="review-item">
+                            <strong>Title:</strong>
+                            <p id="reviewTitle"></p>
+                        </div>
+                        
+                        <div class="review-item">
+                            <strong>Category:</strong>
+                            <p id="reviewCategory"></p>
+                        </div>
+                        
+                        <div class="review-item">
+                            <strong>Abstract:</strong>
+                            <p id="reviewAbstract"></p>
+                        </div>
+                        
+                        <div class="review-item">
+                            <strong>Problem:</strong>
+                            <p id="reviewProblem"></p>
+                        </div>
+                        
+                        <div class="review-item">
+                            <strong>Target Market:</strong>
+                            <p id="reviewAudience"></p>
+                        </div>
+                        
+                        <div class="review-item">
+                            <strong>Technical Description:</strong>
+                            <p id="reviewDescription"></p>
+                        </div>
+                        
+                        <div class="review-item">
+                            <strong>Advantages:</strong>
+                            <p id="reviewAdvantages"></p>
+                        </div>
+                        
+                        <div class="review-item">
+                            <strong>Claims:</strong>
+                            <p id="reviewClaims"></p>
+                        </div>
+                    </div>
+
+                    <div class="legal-options">
+                        <h3>Optional Services</h3>
+                        
+                        <div class="option-card">
+                            <input type="checkbox" id="legalReview" name="legalReview">
+                            <label for="legalReview">
+                                <strong>Expert Legal Review (+$200)</strong>
+                                <p>Have a patent attorney review your application before submission</p>
+                            </label>
+                        </div>
+                        
+                        <div class="option-card">
+                            <input type="checkbox" id="priorArtSearch" name="priorArtSearch">
+                            <label for="priorArtSearch">
+                                <strong>Prior Art Search (+$150)</strong>
+                                <p>Professional search to identify potential conflicts with existing patents</p>
+                            </label>
+                        </div>
+
+                        <div class="option-card">
+                            <input type="checkbox" id="expeditedFiling" name="expeditedFiling">
+                            <label for="expeditedFiling">
+                                <strong>Expedited Filing (+$100)</strong>
+                                <p>Priority processing for faster USPTO submission</p>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="cost-summary">
+                        <h3>Cost Summary</h3>
+                        <div class="cost-line">
+                            <span>Base Filing Fee:</span>
+                            <strong>$500</strong>
+                        </div>
+                        <div class="cost-line" id="legalReviewCost" style="display:none">
+                            <span>Legal Review:</span>
+                            <strong>$200</strong>
+                        </div>
+                        <div class="cost-line" id="priorArtCost" style="display:none">
+                            <span>Prior Art Search:</span>
+                            <strong>$150</strong>
+                        </div>
+                        <div class="cost-line" id="expeditedCost" style="display:none">
+                            <span>Expedited Filing:</span>
+                            <strong>$100</strong>
+                        </div>
+                        <div class="cost-total">
+                            <span>Total:</span>
+                            <strong id="totalCost">$500</strong>
+                        </div>
+                    </div>
+
+                    <div id="submitError" class="error-message"></div>
+                </div>
+
+                <!-- NAVIGATION BUTTONS -->
+                <div class="form-navigation">
+                    <button type="button" class="btn-secondary" id="prevBtn" onclick="prevStep()" style="display:none">
+                        ← Previous
+                    </button>
+                    <button type="button" class="btn-primary" id="nextBtn" onclick="nextStep()">
+                        Next →
+                    </button>
+                    <button type="submit" class="btn-primary btn-success" id="submitBtn" style="display:none">
+                        🚀 Submit Application
+                    </button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</main>
+
+<script src="app.js"></script>
+<script src="file-patent.js"></script>
+
+</body>
+</html>

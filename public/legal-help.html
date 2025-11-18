@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legal Help - Patent Filing Platform</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="app-page">
+
+<!-- NAVIGATION -->
+<nav class="app-navbar">
+    <div class="nav-container">
+        <a href="home.html" class="nav-logo">📄 Patent Platform</a>
+        <div class="nav-tabs">
+            <a href="file-patent.html" class="nav-tab">📝 File Patent</a>
+            <a href="legal-help.html" class="nav-tab active">⚖️ Legal Help</a>
+            <a href="manage-patents.html" class="nav-tab">📋 Manage Patents</a>
+            <a href="search-patents.html" class="nav-tab">🔍 Search Patents</a>
+        </div>
+        <div class="nav-user">
+            <span id="userName">User</span>
+            <button onclick="logout()" class="btn-logout">Logout</button>
+        </div>
+    </div>
+</nav>
+
+<!-- MAIN CONTENT -->
+<main class="app-main">
+    <div class="app-container">
+        
+        <!-- PAGE HEADER -->
+        <div class="page-header">
+            <h1>⚖️ Legal Help & Support</h1>
+            <p>Get expert assistance from patent attorneys and legal professionals</p>
+        </div>
+
+        <!-- HELP OPTIONS -->
+        <div class="help-options-grid">
+            
+            <!-- CONSULT WITH ATTORNEY -->
+            <div class="help-card">
+                <div class="help-icon">👨‍⚖️</div>
+                <h3>Consult with Attorney</h3>
+                <p>Schedule a 1-on-1 consultation with a licensed patent attorney</p>
+                <div class="help-details">
+                    <span class="detail-item">⏱️ 30-60 minutes</span>
+                    <span class="detail-item">💰 $200-$400</span>
+                </div>
+                <button class="btn-primary" onclick="openConsultationModal()">Schedule Consultation</button>
+            </div>
+
+            <!-- DOCUMENT REVIEW -->
+            <div class="help-card">
+                <div class="help-icon">📄</div>
+                <h3>Document Review</h3>
+                <p>Have your patent application reviewed by an expert before submission</p>
+                <div class="help-details">
+                    <span class="detail-item">⏱️ 2-3 business days</span>
+                    <span class="detail-item">💰 $200</span>
+                </div>
+                <button class="btn-primary" onclick="requestReview()">Request Review</button>
+            </div>
+
+            <!-- LEGAL Q&A -->
+            <div class="help-card">
+                <div class="help-icon">💬</div>
+                <h3>Ask a Question</h3>
+                <p>Submit a question to our legal team and get an answer within 24 hours</p>
+                <div class="help-details">
+                    <span class="detail-item">⏱️ Within 24 hours</span>
+                    <span class="detail-item">💰 Free</span>
+                </div>
+                <button class="btn-secondary" onclick="openQuestionModal()">Ask Question</button>
+            </div>
+
+            <!-- PRIOR ART SEARCH -->
+            <div class="help-card">
+                <div class="help-icon">🔍</div>
+                <h3>Prior Art Search</h3>
+                <p>Professional search to identify potential conflicts with existing patents</p>
+                <div class="help-details">
+                    <span class="detail-item">⏱️ 3-5 business days</span>
+                    <span class="detail-item">💰 $150</span>
+                </div>
+                <button class="btn-primary" onclick="orderPriorArt()">Order Search</button>
+            </div>
+
+        </div>
+
+        <!-- AVAILABLE ATTORNEYS -->
+        <div class="attorneys-section">
+            <h2>Our Patent Attorneys</h2>
+            <div class="attorneys-grid">
+                
+                <div class="attorney-card">
+                    <img src="assets/avatar1.png" alt="Attorney" class="attorney-avatar" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22%3E%3Crect width=%22100%22 height=%22100%22 fill=%22%233A59FF%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 font-size=%2240%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22white%22%3EJD%3C/text%3E%3C/svg%3E'">
+                    <h3>Dr. Jennifer Davis</h3>
+                    <p class="attorney-specialty">Software & Technology Patents</p>
+                    <div class="attorney-stats">
+                        <span>⭐ 4.9/5.0</span>
+                        <span>📝 450+ Patents</span>
+                        <span>🎓 15 Years</span>
+                    </div>
+                    <p class="attorney-bio">Former USPTO examiner specializing in software and AI patents. MIT graduate with extensive startup experience.</p>
+                    <button class="btn-secondary btn-sm" onclick="viewAttorney(1)">View Profile</button>
+                </div>
+
+                <div class="attorney-card">
+                    <img src="assets/avatar2.png" alt="Attorney" class="attorney-avatar" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22%3E%3Crect width=%22100%22 height=%22100%22 fill=%22%233A59FF%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 font-size=%2240%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22white%22%3EMC%3C/text%3E%3C/svg%3E'">
+                    <h3>Michael Chen, Esq.</h3>
+                    <p class="attorney-specialty">Mechanical & Hardware Patents</p>
+                    <div class="attorney-stats">
+                        <span>⭐ 4.8/5.0</span>
+                        <span>📝 380+ Patents</span>
+                        <span>🎓 12 Years</span>
+                    </div>
+                    <p class="attorney-bio">Mechanical engineering background with focus on consumer products and medical devices.</p>
+                    <button class="btn-secondary btn-sm" onclick="viewAttorney(2)">View Profile</button>
+                </div>
+
+                <div class="attorney-card">
+                    <img src="assets/avatar3.png" alt="Attorney" class="attorney-avatar" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22100%22 height=%22100%22%3E%3Crect width=%22100%22 height=%22100%22 fill=%22%233A59FF%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 font-size=%2240%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22white%22%3ESR%3C/text%3E%3C/svg%3E'">
+                    <h3>Dr. Sarah Rodriguez</h3>
+                    <p class="attorney-specialty">Biotech & Chemical Patents</p>
+                    <div class="attorney-stats">
+                        <span>⭐ 5.0/5.0</span>
+                        <span>📝 290+ Patents</span>
+                        <span>🎓 10 Years</span>
+                    </div>
+                    <p class="attorney-bio">PhD in Biochemistry with expertise in pharmaceutical and biotech innovations.</p>
+                    <button class="btn-secondary btn-sm" onclick="viewAttorney(3)">View Profile</button>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- FAQ SECTION -->
+        <div class="faq-section">
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-list">
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h3>Do I need an attorney to file a patent?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>No, you can file a patent on your own using our platform. However, attorney consultation is recommended for complex inventions or if you want expert review before submission.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h3>How much does attorney consultation cost?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>30-minute consultations start at $200, while 60-minute sessions are $400. Document reviews are a flat $200 fee.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h3>What is a prior art search?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>A prior art search identifies existing patents, publications, and products similar to your invention. This helps determine patentability and avoid rejection by USPTO.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h3>How long does document review take?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Standard document reviews are completed within 2-3 business days. Expedited reviews (24 hours) are available for an additional fee.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h3>Can I get free legal advice?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes! You can submit general questions through our "Ask a Question" feature and receive a response within 24 hours at no cost.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <h3>Are your attorneys licensed?</h3>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, all attorneys on our platform are licensed to practice before the USPTO and are members in good standing of their respective state bars.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- MY LEGAL REQUESTS -->
+        <div class="requests-section">
+            <h2>My Legal Requests</h2>
+            <div id="requestsList" class="requests-list">
+                <p class="empty-state">No legal requests yet. Click above to get started!</p>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<!-- CONSULTATION MODAL -->
+<div id="consultationModal" class="modal">
+    <div class="modal-content">
+        <span class="modal-close" onclick="closeModal('consultationModal')">&times;</span>
+        <h2>Schedule Attorney Consultation</h2>
+        <form id="consultationForm" onsubmit="submitConsultation(event)">
+            <div class="form-group">
+                <label>Select Attorney</label>
+                <select name="attorney" required>
+                    <option value="">Choose an attorney...</option>
+                    <option value="1">Dr. Jennifer Davis - Software & Technology</option>
+                    <option value="2">Michael Chen - Mechanical & Hardware</option>
+                    <option value="3">Dr. Sarah Rodriguez - Biotech & Chemical</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Consultation Duration</label>
+                <select name="duration" required>
+                    <option value="30">30 minutes - $200</option>
+                    <option value="60">60 minutes - $400</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Preferred Date</label>
+                <input type="date" name="date" required min="<?php echo date('Y-m-d'); ?>">
+            </div>
+            <div class="form-group">
+                <label>Preferred Time</label>
+                <input type="time" name="time" required>
+            </div>
+            <div class="form-group">
+                <label>Brief Description</label>
+                <textarea name="description" rows="3" required placeholder="What would you like to discuss?"></textarea>
+            </div>
+            <button type="submit" class="btn-primary">Submit Request</button>
+        </form>
+    </div>
+</div>
+
+<!-- QUESTION MODAL -->
+<div id="questionModal" class="modal">
+    <div class="modal-content">
+        <span class="modal-close" onclick="closeModal('questionModal')">&times;</span>
+        <h2>Ask a Legal Question</h2>
+        <form id="questionForm" onsubmit="submitQuestion(event)">
+            <div class="form-group">
+                <label>Question Category</label>
+                <select name="category" required>
+                    <option value="">Select category...</option>
+                    <option value="patentability">Patentability</option>
+                    <option value="process">Filing Process</option>
+                    <option value="claims">Patent Claims</option>
+                    <option value="prior-art">Prior Art</option>
+                    <option value="costs">Costs & Fees</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Your Question</label>
+                <textarea name="question" rows="5" required placeholder="Type your question here..."></textarea>
+            </div>
+            <p class="form-note">💡 You'll receive a response within 24 hours via email</p>
+            <button type="submit" class="btn-primary">Submit Question</button>
+        </form>
+    </div>
+</div>
+
+<script src="app.js"></script>
+<script src="legal-help.js"></script>
+
+</body>
+</html>

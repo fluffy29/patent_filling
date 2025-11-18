@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Patent Filing Platform</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="dashboard-page">
+
+<div class="dashboard-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h2>📄 Patent Platform</h2>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item active">🏠 Home</a>
+            <a href="wizard.html" class="nav-item">✨ Start Filing</a>
+            <a href="#" class="nav-item" onclick="loadFilings()">📋 My Filings</a>
+            <a href="roadmap.html" class="nav-item">🗺️ Roadmap</a>
+            <a href="#" class="nav-item" onclick="logout()">🚪 Logout</a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="dashboard-main">
+        <header class="dashboard-header">
+            <h1>Welcome, <span id="userName">User</span>!</h1>
+            <p class="dashboard-subtitle">Ready to protect your next big idea?</p>
+        </header>
+
+        <div class="dashboard-stats">
+            <div class="stat-card">
+                <div class="stat-icon">📝</div>
+                <div class="stat-info">
+                    <div class="stat-number" id="filingCount">0</div>
+                    <div class="stat-label">Active Filings</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">⏱️</div>
+                <div class="stat-info">
+                    <div class="stat-number">~30m</div>
+                    <div class="stat-label">Avg. Filing Time</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">💰</div>
+                <div class="stat-info">
+                    <div class="stat-number">$500</div>
+                    <div class="stat-label">Base Cost</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="dashboard-actions">
+            <div class="action-card primary-action">
+                <h2>🚀 Start a New Filing</h2>
+                <p>Begin protecting your innovation with our guided wizard</p>
+                <a href="wizard.html" class="btn-primary">Start Now</a>
+            </div>
+            <div class="action-card">
+                <h2>📚 View Templates</h2>
+                <p>Browse pre-built patent templates</p>
+                <button class="btn-secondary" disabled>Coming Soon</button>
+            </div>
+        </div>
+
+        <div class="recent-filings">
+            <h2>Recent Filings</h2>
+            <div id="filingsList" class="filings-list">
+                <p class="empty-state">No filings yet. Start your first filing above!</p>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script src="app.js"></script>
+<script>
+// Check authentication
+checkAuth();
+
+// Load user data
+async function loadDashboard() {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user) {
+        document.getElementById('userName').textContent = user.name;
+    }
+    
+    // Load filings
+    await loadFilings();
+}
+
+async function loadFilings() {
+    const token = localStorage.getItem('token');
+    
+    try {
+        const response = await fetch('/api/filing/list', {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok && data.filings) {
+            document.getElementById('filingCount').textContent = data.filings.length;
+            
+            const filingsList = document.getElementById('filingsList');
+            
+            if (data.filings.length === 0) {
+                filingsList.innerHTML = '<p class="empty-state">No filings yet. Start your first filing above!</p>';
+            } else {
+                filingsList.innerHTML = data.filings.map(filing => `
+                    <div class="filing-item">
+                        <div class="filing-info">
+                            <h3>${filing.title}</h3>
+                            <p>${filing.abstract.substring(0, 100)}...</p>
+                            <span class="filing-date">${new Date(filing.createdAt).toLocaleDateString()}</span>
+                        </div>
+                        <span class="filing-status ${filing.status}">${filing.status}</span>
+                    </div>
+                `).join('');
+            }
+        }
+    } catch (error) {
+        console.error('Error loading filings:', error);
+    }
+}
+
+// Initialize
+loadDashboard();
+</script>
+
+</body>
+</html>

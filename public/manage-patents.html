@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Patents - Patent Filing Platform</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="app-page">
+
+<!-- NAVIGATION -->
+<nav class="app-navbar">
+    <div class="nav-container">
+        <a href="home.html" class="nav-logo">📄 Patent Platform</a>
+        <div class="nav-tabs">
+            <a href="file-patent.html" class="nav-tab">📝 File Patent</a>
+            <a href="legal-help.html" class="nav-tab">⚖️ Legal Help</a>
+            <a href="manage-patents.html" class="nav-tab active">📋 Manage Patents</a>
+            <a href="search-patents.html" class="nav-tab">🔍 Search Patents</a>
+        </div>
+        <div class="nav-user">
+            <span id="userName">User</span>
+            <button onclick="logout()" class="btn-logout">Logout</button>
+        </div>
+    </div>
+</nav>
+
+<!-- MAIN CONTENT -->
+<main class="app-main">
+    <div class="app-container">
+        
+        <!-- PAGE HEADER -->
+        <div class="page-header">
+            <h1>📋 My Patents</h1>
+            <p>Track and manage all your patent applications in one place</p>
+        </div>
+
+        <!-- STATS OVERVIEW -->
+        <div class="stats-grid">
+            <div class="stat-box">
+                <div class="stat-icon">📝</div>
+                <div class="stat-info">
+                    <div class="stat-number" id="totalPatents">0</div>
+                    <div class="stat-label">Total Applications</div>
+                </div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-icon">⏳</div>
+                <div class="stat-info">
+                    <div class="stat-number" id="pendingPatents">0</div>
+                    <div class="stat-label">Pending Review</div>
+                </div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-icon">✅</div>
+                <div class="stat-info">
+                    <div class="stat-number" id="approvedPatents">0</div>
+                    <div class="stat-label">Approved</div>
+                </div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-icon">📅</div>
+                <div class="stat-info">
+                    <div class="stat-number" id="draftPatents">0</div>
+                    <div class="stat-label">Drafts</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FILTERS -->
+        <div class="filters-bar">
+            <div class="filter-group">
+                <label>Filter by Status:</label>
+                <select id="statusFilter" onchange="filterPatents()">
+                    <option value="all">All Statuses</option>
+                    <option value="draft">Draft</option>
+                    <option value="submitted">Submitted</option>
+                    <option value="reviewing">Under Review</option>
+                    <option value="approved">Approved</option>
+                    <option value="rejected">Rejected</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>Sort by:</label>
+                <select id="sortFilter" onchange="sortPatents()">
+                    <option value="newest">Newest First</option>
+                    <option value="oldest">Oldest First</option>
+                    <option value="title">Title A-Z</option>
+                    <option value="status">Status</option>
+                </select>
+            </div>
+            <div class="search-group">
+                <input type="search" id="searchBox" placeholder="Search patents..." onkeyup="searchPatents()">
+            </div>
+        </div>
+
+        <!-- PATENTS LIST -->
+        <div class="patents-container">
+            <div id="patentsList" class="patents-list">
+                <!-- Patents will be loaded here -->
+                <p class="empty-state">Loading your patents...</p>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<!-- PATENT DETAIL MODAL -->
+<div id="patentModal" class="modal modal-large">
+    <div class="modal-content">
+        <span class="modal-close" onclick="closeModal('patentModal')">&times;</span>
+        <div id="patentDetail"></div>
+    </div>
+</div>
+
+<script src="app.js"></script>
+<script src="manage-patents.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Patents - Patent Filing Platform</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="app-page">
+
+<!-- NAVIGATION -->
+<nav class="app-navbar">
+    <div class="nav-container">
+        <a href="home.html" class="nav-logo">📄 Patent Platform</a>
+        <div class="nav-tabs">
+            <a href="file-patent.html" class="nav-tab">📝 File Patent</a>
+            <a href="legal-help.html" class="nav-tab">⚖️ Legal Help</a>
+            <a href="manage-patents.html" class="nav-tab">📋 Manage Patents</a>
+            <a href="search-patents.html" class="nav-tab active">🔍 Search Patents</a>
+        </div>
+        <div class="nav-user">
+            <span id="userName">User</span>
+            <button onclick="logout()" class="btn-logout">Logout</button>
+        </div>
+    </div>
+</nav>
+
+<!-- MAIN CONTENT -->
+<main class="app-main">
+    <div class="app-container">
+        
+        <!-- PAGE HEADER -->
+        <div class="page-header">
+            <h1>🔍 Search Patents</h1>
+            <p>Search millions of existing patents to validate your idea and avoid conflicts</p>
+        </div>
+
+        <!-- SEARCH BAR -->
+        <div class="search-section">
+            <div class="search-box-large">
+                <input type="text" id="mainSearch" placeholder="Enter keywords, patent number, inventor name, or company..." 
+                       onkeypress="handleSearchEnter(event)">
+                <button class="btn-search" onclick="performSearch()">
+                    <span>🔍 Search</span>
+                </button>
+            </div>
+            <div class="search-tips">
+                <strong>Search Tips:</strong>
+                <span>Use quotes for exact phrases</span>
+                <span>Try keywords like "smart water bottle"</span>
+                <span>Search by patent number (e.g., US10123456)</span>
+            </div>
+        </div>
+
+        <!-- ADVANCED SEARCH -->
+        <div class="advanced-search-toggle">
+            <button class="btn-link" onclick="toggleAdvanced()">⚙️ Advanced Search Options</button>
+        </div>
+
+        <div id="advancedSearch" class="advanced-search-panel" style="display:none">
+            <h3>Advanced Filters</h3>
+            <div class="advanced-grid">
+                <div class="form-group">
+                    <label>Patent Type</label>
+                    <select id="patentType">
+                        <option value="">All Types</option>
+                        <option value="utility">Utility Patent</option>
+                        <option value="design">Design Patent</option>
+                        <option value="plant">Plant Patent</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Technology Field</label>
+                    <select id="techField">
+                        <option value="">All Fields</option>
+                        <option value="software">Software & Computing</option>
+                        <option value="electrical">Electrical & Electronics</option>
+                        <option value="mechanical">Mechanical Engineering</option>
+                        <option value="chemical">Chemical & Materials</option>
+                        <option value="biotech">Biotechnology</option>
+                        <option value="medical">Medical Devices</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Filing Date Range</label>
+                    <div class="date-range">
+                        <input type="date" id="dateFrom" placeholder="From">
+                        <span>to</span>
+                        <input type="date" id="dateTo" placeholder="To">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Inventor</label>
+                    <input type="text" id="inventor" placeholder="Inventor name">
+                </div>
+                <div class="form-group">
+                    <label>Assignee/Company</label>
+                    <input type="text" id="assignee" placeholder="Company or organization">
+                </div>
+                <div class="form-group">
+                    <label>Patent Status</label>
+                    <select id="patentStatus">
+                        <option value="">All Statuses</option>
+                        <option value="active">Active</option>
+                        <option value="pending">Pending</option>
+                        <option value="expired">Expired</option>
+                    </select>
+                </div>
+            </div>
+            <div class="advanced-buttons">
+                <button class="btn-primary" onclick="performAdvancedSearch()">Apply Filters</button>
+                <button class="btn-secondary" onclick="resetFilters()">Reset</button>
+            </div>
+        </div>
+
+        <!-- QUICK SEARCHES -->
+        <div class="quick-searches">
+            <h3>Popular Searches</h3>
+            <div class="tag-cloud">
+                <button class="tag-btn" onclick="quickSearch('artificial intelligence')">Artificial Intelligence</button>
+                <button class="tag-btn" onclick="quickSearch('machine learning')">Machine Learning</button>
+                <button class="tag-btn" onclick="quickSearch('smartphone')">Smartphone</button>
+                <button class="tag-btn" onclick="quickSearch('electric vehicle')">Electric Vehicle</button>
+                <button class="tag-btn" onclick="quickSearch('renewable energy')">Renewable Energy</button>
+                <button class="tag-btn" onclick="quickSearch('medical device')">Medical Device</button>
+                <button class="tag-btn" onclick="quickSearch('blockchain')">Blockchain</button>
+                <button class="tag-btn" onclick="quickSearch('drone')">Drone</button>
+            </div>
+        </div>
+
+        <!-- SEARCH RESULTS -->
+        <div id="resultsSection" class="results-section" style="display:none">
+            <div class="results-header">
+                <h2>Search Results</h2>
+                <div class="results-info">
+                    <span id="resultCount">0 results</span>
+                    <div class="results-view">
+                        <button class="view-btn active" onclick="setView('list')">📋 List</button>
+                        <button class="view-btn" onclick="setView('grid')">▦ Grid</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="resultsList" class="results-list">
+                <!-- Results will be loaded here -->
+            </div>
+
+            <!-- PAGINATION -->
+            <div class="pagination" id="pagination">
+                <button class="btn-secondary" onclick="prevPage()">← Previous</button>
+                <span id="pageInfo">Page 1 of 10</span>
+                <button class="btn-secondary" onclick="nextPage()">Next →</button>
+            </div>
+        </div>
+
+        <!-- EMPTY STATE (before search) -->
+        <div id="emptyState" class="empty-state-large">
+            <div class="empty-icon">🔍</div>
+            <h3>Start Your Patent Search</h3>
+            <p>Enter keywords above to search millions of existing patents</p>
+            <div class="empty-suggestions">
+                <strong>Try searching for:</strong>
+                <ul>
+                    <li>Keywords related to your invention</li>
+                    <li>Similar products or technologies</li>
+                    <li>Competitor company names</li>
+                    <li>Specific patent numbers</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- RECENT SEARCHES -->
+        <div class="recent-searches">
+            <h3>Recent Searches</h3>
+            <div id="recentSearchesList" class="recent-list">
+                <p class="empty-state">No recent searches</p>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<!-- PATENT DETAIL MODAL -->
+<div id="patentDetailModal" class="modal modal-large">
+    <div class="modal-content">
+        <span class="modal-close" onclick="closeModal('patentDetailModal')">&times;</span>
+        <div id="patentDetailContent"></div>
+    </div>
+</div>
+
+<script src="app.js"></script>
+<script src="search-patents.js"></script>
+
+</body>
+</html>
