@@ -24,8 +24,8 @@
         
         <form id="loginForm" class="auth-form">
             <div class="form-group">
-                <label for="email">Email Address</label>
-                <input type="email" id="email" name="email" required>
+                <label for="email">Email or Username</label>
+                <input type="text" id="email" name="email" placeholder="e.g. hassan or user@example.com" required>
             </div>
             
             <div class="form-group">
@@ -36,6 +36,7 @@
             <div id="errorMessage" class="error-message"></div>
             
             <button type="submit" class="btn-primary btn-full">Sign In</button>
+            <button type="button" id="demoFill" class="btn-secondary btn-full" style="margin-top:10px;">Use Demo Login (hassan / Epita123!)</button>
         </form>
         
         <p class="auth-footer">
@@ -48,14 +49,40 @@
 
 <script src="app.js"></script>
 <script>
-document.getElementById('loginForm').addEventListener('submit', async (e) => {
+// If already logged in, go straight to dashboard
+try {
+    if (localStorage.getItem('token')) {
+        window.location.href = 'dashboard.html';
+    }
+} catch (e) {}
+
+const loginForm = document.getElementById('loginForm');
+document.getElementById('demoFill').addEventListener('click', () => {
+    document.getElementById('email').value = 'hassan';
+    document.getElementById('password').value = 'Epita123!';
+    loginForm.requestSubmit();
+});
+
+loginForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
+    const rawEmail = document.getElementById('email').value;
+    const rawPassword = document.getElementById('password').value;
+    const email = (rawEmail || '').trim();
+    const password = (rawPassword || '').trim();
     const errorDiv = document.getElementById('errorMessage');
     
     errorDiv.textContent = '';
+    
+    // Demo hardcoded credentials: hassan / Epita123!
+    const isDemoUser = email && (email.toLowerCase() === 'hassan' || email.toLowerCase() === 'hassan@demo.local');
+    if (isDemoUser && password === 'Epita123!') {
+        const demoUser = { id: 'demo-hassan', name: 'Hassan', email: 'hassan@demo.local' };
+        localStorage.setItem('user', JSON.stringify(demoUser));
+        localStorage.setItem('token', 'demo-token-12345');
+        window.location.href = 'dashboard.html';
+        return;
+    }
     
     try {
         const response = await fetch('/api/auth/login', {
@@ -69,6 +96,14 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
         const data = await response.json();
         
         if (!response.ok) {
+            // Fallback to demo if entering demo creds but server failed
+            if (isDemoUser && password === 'Epita123!') {
+                const demoUser = { id: 'demo-hassan', name: 'Hassan', email: 'hassan@demo.local' };
+                localStorage.setItem('user', JSON.stringify(demoUser));
+                localStorage.setItem('token', 'demo-token-12345');
+                window.location.href = 'dashboard.html';
+                return;
+            }
             errorDiv.textContent = data.error || 'Login failed. Please try again.';
             return;
         }
@@ -81,6 +116,14 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
         window.location.href = 'dashboard.html';
     } catch (error) {
         console.error('Login error:', error);
+        // Network errors: still allow demo creds
+        if (isDemoUser && password === 'Epita123!') {
+            const demoUser = { id: 'demo-hassan', name: 'Hassan', email: 'hassan@demo.local' };
+            localStorage.setItem('user', JSON.stringify(demoUser));
+            localStorage.setItem('token', 'demo-token-12345');
+            window.location.href = 'dashboard.html';
+            return;
+        }
         errorDiv.textContent = 'Network error. Please try again.';
     }
 });
