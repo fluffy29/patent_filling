@@ -12,59 +12,105 @@
     <!-- Sidebar -->
     <aside class="sidebar">
         <div class="sidebar-header">
-            <h2>📄 Patent Platform</h2>
+            <h2><span class="logo-icon">P</span> Patent Platform</h2>
         </div>
         <nav class="sidebar-nav">
-            <a href="dashboard.html" class="nav-item active">🏠 Home</a>
-            <a href="wizard.html" class="nav-item">✨ Start Filing</a>
-            <a href="#" class="nav-item" onclick="loadFilings()">📋 My Filings</a>
-            <a href="roadmap.html" class="nav-item">🗺️ Roadmap</a>
-            <a href="#" class="nav-item" onclick="logout()">🚪 Logout</a>
+            <a href="dashboard.html" class="nav-item active">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                </svg>
+                Home
+            </a>
+            <a href="wizard.html" class="nav-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 5v14M5 12h14"></path>
+                </svg>
+                Start Filing
+            </a>
+            
+                <a href="my-filings.html" class="nav-item">
+                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                       <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                   </svg>
+                   My Filings
+            </a>
+            <a href="roadmap.html" class="nav-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path>
+                </svg>
+                Roadmap
+            </a>
+            <a href="#" class="nav-item" onclick="logout(); return false;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+                </svg>
+                Logout
+            </a>
         </nav>
     </aside>
 
     <!-- Main Content -->
     <main class="dashboard-main">
         <header class="dashboard-header">
-            <h1>Welcome, <span id="userName">User</span>!</h1>
+            <h1>Welcome, <span id="userName" style="background: linear-gradient(135deg, #4F46E5, #7C3AED); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">User</span>!</h1>
             <p class="dashboard-subtitle">Ready to protect your next big idea?</p>
         </header>
 
         <div class="dashboard-stats">
-            <div class="stat-card">
-                <div class="stat-icon">📝</div>
-                <div class="stat-info">
-                    <div class="stat-number" id="filingCount">0</div>
-                    <div class="stat-label">Active Filings</div>
-                </div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon">⏱️</div>
-                <div class="stat-info">
-                    <div class="stat-number">~30m</div>
-                    <div class="stat-label">Avg. Filing Time</div>
-                </div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon">💰</div>
-                <div class="stat-info">
-                    <div class="stat-number">$500</div>
-                    <div class="stat-label">Base Cost</div>
-                </div>
-            </div>
+                                <div class="stat-card">
+                        <div class="stat-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                            </svg>
+                        </div>
+                        <div class="stat-details">
+                            <p class="stat-label">Total Filings</p>
+                            <p class="stat-value" id="totalFilings">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg>
+                        </div>
+                        <div class="stat-details">
+                            <p class="stat-label">Pending</p>
+                            <p class="stat-value" id="pendingFilings">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="8" r="7"></circle>
+                                <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+                            </svg>
+                        </div>
+                        <div class="stat-details">
+                            <p class="stat-label">Approved</p>
+                            <p class="stat-value" id="approvedFilings">0</p>
+                        </div>
+                    </div>
         </div>
 
         <div class="dashboard-actions">
-            <div class="action-card primary-action">
-                <h2>🚀 Start a New Filing</h2>
-                <p>Begin protecting your innovation with our guided wizard</p>
-                <a href="wizard.html" class="btn-primary">Start Now</a>
-            </div>
-            <div class="action-card">
-                <h2>📚 View Templates</h2>
-                <p>Browse pre-built patent templates</p>
-                <button class="btn-secondary" disabled>Coming Soon</button>
-            </div>
+                                <div class="action-card">
+                        <svg class="action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 5v14M5 12h14"></path>
+                        </svg>
+                        <h3>Start New Filing</h3>
+                        <p>Begin your patent application process with our guided wizard</p>
+                        <a href="file-patent.html" class="btn btn-primary">Start Now</a>
+                    </div>
+                    <div class="action-card">
+                        <svg class="action-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                        </svg>
+                        <h3>Knowledge Base</h3>
+                        <p>Learn about patent filing, best practices, and common questions</p>
+                        <a href="legal-help.html" class="btn btn-secondary">Explore</a>
+                    </div>
         </div>
 
         <div class="recent-filings">
@@ -82,55 +128,75 @@
 checkAuth();
 
 // Load user data
-async function loadDashboard() {
-    const user = JSON.parse(localStorage.getItem('user'));
+function loadDashboard() {
+    const user = JSON.parse(localStorage.getItem('user') || '{"name":"User"}');
     if (user) {
         document.getElementById('userName').textContent = user.name;
     }
     
-    // Load filings
-    await loadFilings();
+    // Load filings from localStorage
+    loadFilings();
 }
 
-async function loadFilings() {
-    const token = localStorage.getItem('token');
+function loadFilings() {
+    // Get patents from localStorage (created by wizard or demo data)
+    const patents = JSON.parse(localStorage.getItem('demoPatents') || '[]');
     
-    try {
-        const response = await fetch('/api/filing/list', {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        });
-        
-        const data = await response.json();
-        
-        if (response.ok && data.filings) {
-            document.getElementById('filingCount').textContent = data.filings.length;
+    // Update stats
+    const totalFilings = patents.length;
+    const pendingFilings = patents.filter(p => p.status === 'submitted' || p.status === 'reviewing').length;
+    const approvedFilings = patents.filter(p => p.status === 'approved').length;
+    
+    document.getElementById('totalFilings').textContent = totalFilings;
+    document.getElementById('pendingFilings').textContent = pendingFilings;
+    document.getElementById('approvedFilings').textContent = approvedFilings;
+    
+    // Display filings list
+    const filingsList = document.getElementById('filingsList');
+    
+    if (patents.length === 0) {
+        filingsList.innerHTML = '<p class="empty-state">No filings yet. Start your first filing above!</p>';
+    } else {
+        filingsList.innerHTML = patents.map(filing => {
+            const statusClass = filing.status === 'approved' ? 'status-approved' : 
+                              filing.status === 'reviewing' ? 'status-reviewing' : 'status-submitted';
+            const statusText = filing.status === 'approved' ? 'Approved' :
+                             filing.status === 'reviewing' ? 'Under Review' : 'Submitted';
             
-            const filingsList = document.getElementById('filingsList');
-            
-            if (data.filings.length === 0) {
-                filingsList.innerHTML = '<p class="empty-state">No filings yet. Start your first filing above!</p>';
-            } else {
-                filingsList.innerHTML = data.filings.map(filing => `
-                    <div class="filing-item">
-                        <div class="filing-info">
-                            <h3>${filing.title}</h3>
-                            <p>${filing.abstract.substring(0, 100)}...</p>
-                            <span class="filing-date">${new Date(filing.createdAt).toLocaleDateString()}</span>
+            return `
+                <div class="filing-item">
+                    <div class="filing-info">
+                        <h3>${filing.title}</h3>
+                        <p>${filing.abstract ? filing.abstract.substring(0, 120) : 'Patent application'}...</p>
+                        <div class="filing-meta">
+                            <span class="filing-date">
+                                <svg style="width: 16px; height: 16px; display: inline-block; vertical-align: middle; margin-right: 4px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                                </svg>
+                                ${new Date(filing.filedDate || Date.now()).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                            </span>
+                            ${filing.category ? `<span class="filing-category">${filing.category}</span>` : ''}
                         </div>
-                        <span class="filing-status ${filing.status}">${filing.status}</span>
                     </div>
-                `).join('');
-            }
-        }
-    } catch (error) {
-        console.error('Error loading filings:', error);
+                    <span class="filing-status ${statusClass}">${statusText}</span>
+                </div>
+            `;
+        }).join('');
     }
 }
 
 // Initialize
 loadDashboard();
+
+// Refresh filings when page becomes visible (in case user filed in another tab)
+document.addEventListener('visibilitychange', function() {
+    if (!document.hidden) {
+        loadFilings();
+    }
+});
 </script>
 
 </body>

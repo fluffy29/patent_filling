@@ -23,7 +23,7 @@
         
         <!-- STEP 1: Title & Abstract -->
         <div class="wizard-step active" data-step="1">
-            <h2>📝 Describe Your Invention</h2>
+            <h2><span class="step-number">1</span> Describe Your Invention</h2>
             <div class="form-group">
                 <label for="title">Invention Title</label>
                 <input type="text" id="title" name="title" required 
@@ -39,7 +39,7 @@
 
         <!-- STEP 2: Problem -->
         <div class="wizard-step" data-step="2">
-            <h2>🎯 Problem Your Invention Solves</h2>
+            <h2><span class="step-number">2</span> Problem Your Invention Solves</h2>
             <div class="form-group">
                 <label for="problem">What problem does this solve?</label>
                 <textarea id="problem" name="problem" rows="5" required
@@ -50,7 +50,7 @@
 
         <!-- STEP 3: Target Audience -->
         <div class="wizard-step" data-step="3">
-            <h2>👥 Target Audience</h2>
+            <h2><span class="step-number">3</span> Target Audience</h2>
             <div class="form-group">
                 <label for="audience">Who will use this invention?</label>
                 <textarea id="audience" name="audience" rows="5" required
@@ -61,7 +61,7 @@
 
         <!-- STEP 4: Technical Description -->
         <div class="wizard-step" data-step="4">
-            <h2>🔧 Technical Description</h2>
+            <h2><span class="step-number">4</span> Technical Description</h2>
             <div class="form-group">
                 <label for="description">How does your invention work?</label>
                 <textarea id="description" name="description" rows="6" required
@@ -72,10 +72,13 @@
 
         <!-- STEP 5: Claims -->
         <div class="wizard-step" data-step="5">
-            <h2>⚖️ Patent Claims</h2>
+            <h2><span class="step-number">5</span> Patent Claims</h2>
             <div class="claims-tools">
                 <button type="button" class="btn-secondary" onclick="generateClaims()">
-                    🤖 Auto-Generate Claims
+                    <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
+                    </svg>
+                    Auto-Generate Claims
                 </button>
                 <small>Click to generate suggested claims based on your description</small>
             </div>
@@ -89,9 +92,12 @@
 
         <!-- STEP 6: Sketches (Optional) -->
         <div class="wizard-step" data-step="6">
-            <h2>🎨 Upload Sketches (Optional)</h2>
+            <h2><span class="step-number">6</span> Upload Sketches (Optional)</h2>
             <div class="upload-zone">
-                <p>📁 Upload drawings, diagrams, or prototypes</p>
+                <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"></path>
+                </svg>
+                <p>Upload drawings, diagrams, or prototypes</p>
                 <input type="file" id="sketches" accept="image/*,.pdf" multiple>
                 <small>Supported: JPG, PNG, PDF</small>
             </div>
@@ -100,7 +106,7 @@
 
         <!-- STEP 7: Review & Submit -->
         <div class="wizard-step" data-step="7">
-            <h2>✅ Review & Submit</h2>
+            <h2><span class="step-number">7</span> Review & Submit</h2>
             <div class="review-section">
                 <h3>Your Filing Summary</h3>
                 <div class="review-item">
@@ -238,6 +244,32 @@ function generateClaims() {
     alert('✅ Claims generated! Review and edit as needed.');
 }
 
+// Helper: Save filing to localStorage for immediate dashboard display
+function saveFilingToLocal(filing) {
+    try {
+        const list = JSON.parse(localStorage.getItem('demoPatents') || '[]');
+        // Attach defaults
+        const now = new Date();
+        const item = {
+            id: filing.id || `local-${now.getTime()}`,
+            title: filing.title,
+            abstract: filing.abstract,
+            problem: filing.problem,
+            audience: filing.audience,
+            description: filing.description,
+            claims: filing.claims,
+            status: filing.status || 'submitted',
+            filedDate: filing.filedDate || now.toISOString().slice(0,10),
+            user: (JSON.parse(localStorage.getItem('user') || '{}').name) || 'local',
+            category: filing.category || 'General'
+        };
+        list.unshift(item);
+        localStorage.setItem('demoPatents', JSON.stringify(list));
+    } catch (err) {
+        console.warn('Local save failed:', err);
+    }
+}
+
 // Form submission
 document.getElementById('wizardForm').addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -265,18 +297,34 @@ document.getElementById('wizardForm').addEventListener('submit', async (e) => {
             body: JSON.stringify(filingData)
         });
         
-        const data = await response.json();
-        
+        let data = {};
+        try { data = await response.json(); } catch(_) { data = {}; }
+
         if (!response.ok) {
-            errorDiv.textContent = data.error || 'Submission failed. Please try again.';
+            // Fallback: save locally so the user sees it in dashboard
+            saveFilingToLocal(filingData);
+            alert((data && data.error) ? `${data.error}\nSaved locally. You can sync later after login.` : 'Saved locally. You can sync later.');
+            window.location.href = 'dashboard.html';
             return;
         }
-        
+
+        // Save to local for immediate visibility in dashboard (use API values when present)
+        const saved = data.filing || data;
+        saveFilingToLocal({
+            id: saved && (saved._id || saved.id),
+            ...filingData,
+            status: (saved && saved.status) || 'submitted',
+            filedDate: (saved && (saved.createdAt || saved.filedDate)) || new Date().toISOString().slice(0,10)
+        });
+
         alert('🎉 Filing submitted successfully!');
         window.location.href = 'dashboard.html';
     } catch (error) {
         console.error('Submission error:', error);
-        errorDiv.textContent = 'Network error. Please try again.';
+        // Fallback to local save so user still sees the filing
+        saveFilingToLocal(filingData);
+        alert('You are offline or the server is unavailable. Your filing has been saved locally and will appear in your dashboard.');
+        window.location.href = 'dashboard.html';
     }
 });
 

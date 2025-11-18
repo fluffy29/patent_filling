@@ -93,7 +93,7 @@ initializeDemoData();
 
 function checkAuth() {
     const token = localStorage.getItem('token');
-    const protectedPages = ['dashboard.html', 'wizard.html', 'file-patent.html', 'legal-help.html', 'manage-patents.html', 'search-patents.html'];
+    const protectedPages = ['dashboard.html', 'wizard.html', 'file-patent.html', 'legal-help.html', 'manage-patents.html', 'search-patents.html', 'my-filings.html'];
     const currentPage = window.location.pathname.split('/').pop();
     
     if (protectedPages.includes(currentPage) && !token) {

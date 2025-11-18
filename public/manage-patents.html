@@ -11,12 +11,32 @@
 <!-- NAVIGATION -->
 <nav class="app-navbar">
     <div class="nav-container">
-        <a href="home.html" class="nav-logo">📄 Patent Platform</a>
+        <a href="home.html" class="nav-logo"><span class="logo-icon">P</span> Patent Platform</a>
         <div class="nav-tabs">
-            <a href="file-patent.html" class="nav-tab">📝 File Patent</a>
-            <a href="legal-help.html" class="nav-tab">⚖️ Legal Help</a>
-            <a href="manage-patents.html" class="nav-tab active">📋 Manage Patents</a>
-            <a href="search-patents.html" class="nav-tab">🔍 Search Patents</a>
+            <a href="file-patent.html" class="nav-tab">
+                <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 5v14M5 12h14"></path>
+                </svg>
+                File Patent
+            </a>
+            <a href="legal-help.html" class="nav-tab">
+                <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"></path>
+                </svg>
+                Legal Help
+            </a>
+            <a href="manage-patents.html" class="nav-tab active">
+                <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                </svg>
+                Manage Patents
+            </a>
+            <a href="search-patents.html" class="nav-tab">
+                <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+                Search Patents
+            </a>
         </div>
         <div class="nav-user">
             <span id="userName">User</span>
@@ -31,28 +51,46 @@
         
         <!-- PAGE HEADER -->
         <div class="page-header">
-            <h1>📋 My Patents</h1>
+            <h1>
+                <svg class="help-icon" style="width: 48px; height: 48px; display: inline-block; vertical-align: middle; margin-right: 12px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                </svg>
+                My Patents
+            </h1>
             <p>Track and manage all your patent applications in one place</p>
         </div>
 
         <!-- STATS OVERVIEW -->
         <div class="stats-grid">
             <div class="stat-box">
-                <div class="stat-icon">📝</div>
+                <div class="stat-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                </div>
                 <div class="stat-info">
                     <div class="stat-number" id="totalPatents">0</div>
                     <div class="stat-label">Total Applications</div>
                 </div>
             </div>
             <div class="stat-box">
-                <div class="stat-icon">⏳</div>
+                <div class="stat-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg>
+                </div>
                 <div class="stat-info">
                     <div class="stat-number" id="pendingPatents">0</div>
                     <div class="stat-label">Pending Review</div>
                 </div>
             </div>
             <div class="stat-box">
-                <div class="stat-icon">✅</div>
+                <div class="stat-icon">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </div>
                 <div class="stat-info">
                     <div class="stat-number" id="approvedPatents">0</div>
                     <div class="stat-label">Approved</div>

@@ -11,7 +11,7 @@
 <!-- NAVIGATION -->
 <nav class="navbar">
     <div class="nav-container">
-        <a href="index.html" class="nav-logo">📄 Patent Platform</a>
+        <a href="index.html" class="logo"><span class="logo-icon">P</span> PatentPlatform</a>
         <ul class="nav-menu">
             <li><a href="#problem">Problem</a></li>
             <li><a href="#solution">Solution</a></li>
@@ -19,28 +19,52 @@
             <li><a href="login.html" class="nav-btn-secondary">Login</a></li>
             <li><a href="signup.html" class="nav-btn-primary">Get Started</a></li>
         </ul>
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
     </div>
 </nav>
 
 <!-- HERO SECTION -->
 <section class="hero-section">
+    <div class="hero-background-effect"></div>
     <div class="container">
-        <h1 class="hero-title">Patent Filing Made Simple</h1>
+        <div class="hero-badge">🚀 Empowering Innovators Worldwide</div>
+        <h1 class="hero-title">Patent Filing Made <span class="gradient-text">Simple</span></h1>
         <p class="hero-subtitle">Democratizing innovation. Your idea, protected at 95% lower cost.</p>
         <div class="hero-buttons">
-            <a href="signup.html" class="btn-large btn-primary">Get Started Free</a>
-            <a href="#features" class="btn-large btn-secondary">Learn More</a>
+            <a href="signup.html" class="btn-large btn-primary">
+                <span>Get Started Free</span>
+                <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M5 12h14M12 5l7 7-7 7"></path>
+                </svg>
+            </a>
+            <a href="#features" class="btn-large btn-secondary">
+                <span>Learn More</span>
+            </a>
         </div>
         <div class="hero-stats">
             <div class="hero-stat">
+                <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                </svg>
                 <strong>95%</strong>
                 <span>Cost Reduction</span>
             </div>
             <div class="hero-stat">
+                <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
                 <strong>$500</strong>
                 <span>Average Cost</span>
             </div>
             <div class="hero-stat">
+                <svg class="stat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
                 <strong>24/7</strong>
                 <span>Platform Access</span>
             </div>
@@ -49,22 +73,35 @@
 </section>
 
 <!-- PROBLEM SECTION -->
-<section id="problem" class="section">
+<section id="problem" class="section problem-section">
     <div class="container">
+        <div class="section-badge">The Challenge</div>
         <h2 class="section-title">The Problem</h2>
         <div class="problem-grid">
             <div class="problem-card">
-                <div class="icon">⚖️</div>
+                <div class="icon-wrapper">
+                    <svg class="problem-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"></path>
+                    </svg>
+                </div>
                 <h3>Confusing Legal Language</h3>
                 <p>Young inventors struggle with complex patent terminology and requirements.</p>
             </div>
             <div class="problem-card">
-                <div class="icon">💸</div>
+                <div class="icon-wrapper">
+                    <svg class="problem-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </div>
                 <h3>High Costs</h3>
                 <p>Traditional patent filing costs $10,000–$20,000, blocking innovation.</p>
             </div>
             <div class="problem-card">
-                <div class="icon">😰</div>
+                <div class="icon-wrapper">
+                    <svg class="problem-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                    </svg>
+                </div>
                 <h3>Fear of Mistakes</h3>
                 <p>One error can invalidate years of work and thousands of dollars.</p>
             </div>
@@ -73,54 +110,84 @@
 </section>
 
 <!-- SOLUTION SECTION -->
-<section id="solution" class="section section-dark">
+<section id="solution" class="section solution-section">
     <div class="container">
-        <h2 class="section-title">Our Solution</h2>
+        <div class="section-badge">Our Solution</div>
+        <h2 class="section-title">Innovation Made Accessible</h2>
         <p class="section-subtitle">
             We eliminate legal complexity and offer <strong>95% cost reduction</strong> 
             compared to traditional patent firms. Innovation shouldn't be a luxury.
         </p>
         <div class="cost-comparison">
             <div class="cost-box traditional">
-                <h3>Traditional Firms</h3>
-                <div class="cost-number">$10,000 - $20,000</div>
-                <p>Attorneys, consultants, filing fees</p>
+                <div class="cost-label">Traditional Firms</div>
+                <div class="cost-amount">$10,000–$20,000</div>
+                <div class="cost-details">
+                    <span>• Attorney fees</span>
+                    <span>• Consultant charges</span>
+                    <span>• Complex process</span>
+                </div>
             </div>
-            <div class="vs">VS</div>
+            <div class="cost-arrow">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                </svg>
+            </div>
             <div class="cost-box platform">
-                <h3>Our Platform</h3>
-                <div class="cost-number">$500 - $800</div>
-                <p>Guided wizard, error checking, optional review</p>
+                <div class="cost-badge">95% Savings</div>
+                <div class="cost-label">Our Platform</div>
+                <div class="cost-amount">$500–$800</div>
+                <div class="cost-details">
+                    <span>• Guided wizard</span>
+                    <span>• AI-powered checks</span>
+                    <span>• Simple process</span>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
 <!-- FEATURES SECTION -->
-<section id="features" class="section">
+<section id="features" class="section features-section">
     <div class="container">
         <h2 class="section-title">Platform Features</h2>
         <div class="features-grid">
             <div class="feature-card">
-                <div class="feature-icon">📝</div>
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                </div>
                 <h3>File Patents</h3>
                 <p>Step-by-step guided wizard to file your patent application with AI assistance.</p>
                 <a href="dashboard.html" class="feature-link">Start Filing →</a>
             </div>
             <div class="feature-card">
-                <div class="feature-icon">⚖️</div>
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"></path>
+                    </svg>
+                </div>
                 <h3>Legal Help</h3>
                 <p>Get expert legal assistance from patent attorneys when you need it.</p>
                 <a href="dashboard.html" class="feature-link">Get Help →</a>
             </div>
             <div class="feature-card">
-                <div class="feature-icon">📋</div>
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                    </svg>
+                </div>
                 <h3>Manage Patents</h3>
                 <p>Track all your patent applications, status updates, and documents in one place.</p>
                 <a href="dashboard.html" class="feature-link">Manage →</a>
             </div>
             <div class="feature-card">
-                <div class="feature-icon">🔍</div>
+                <div class="feature-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                </div>
                 <h3>Search Patents</h3>
                 <p>Search millions of existing patents to validate your idea and avoid conflicts.</p>
                 <a href="dashboard.html" class="feature-link">Search →</a>
@@ -130,9 +197,10 @@
 </section>
 
 <!-- HOW IT WORKS -->
-<section class="section section-light">
+<section class="section target-section">
     <div class="container">
-        <h2 class="section-title">How It Works</h2>
+        <div class="section-badge-light">How It Works</div>
+        <h2 class="section-title">Four Simple Steps</h2>
         <div class="steps-grid">
             <div class="step-card">
                 <div class="step-number">1</div>
@@ -180,47 +248,47 @@
 </section>
 
 <!-- CTA SECTION -->
-<section class="section section-cta">
+<section class="section cta-section">
     <div class="container">
-        <h2 class="cta-title">Ready to Protect Your Innovation?</h2>
-        <p class="cta-subtitle">Join thousands of creators who are democratizing innovation.</p>
+        <h2 class="cta-heading">Ready to Protect Your Innovation?</h2>
+        <p class="cta-text">Join thousands of creators who are democratizing innovation.</p>
         <div class="cta-buttons">
             <a href="signup.html" class="btn-large btn-primary">Get Started Free</a>
             <a href="login.html" class="btn-large btn-secondary">Sign In</a>
         </div>
-        <p class="cta-footer">No credit card required • Start filing in minutes</p>
+        <p class="cta-note">No credit card required • Start filing in minutes</p>
     </div>
 </section>
 
 <!-- FOOTER -->
 <footer class="footer">
     <div class="container">
-        <div class="footer-grid">
-            <div class="footer-col">
+        <div class="footer-content">
+            <div class="footer-section">
                 <h4>Patent Platform</h4>
                 <p>Democratizing innovation for everyone.</p>
             </div>
-            <div class="footer-col">
+            <div class="footer-section">
                 <h4>Product</h4>
-                <ul>
+                <ul class="footer-links">
                     <li><a href="dashboard.html">File Patents</a></li>
                     <li><a href="dashboard.html">Legal Help</a></li>
                     <li><a href="dashboard.html">Manage Patents</a></li>
                     <li><a href="dashboard.html">Search Patents</a></li>
                 </ul>
             </div>
-            <div class="footer-col">
+            <div class="footer-section">
                 <h4>Company</h4>
-                <ul>
+                <ul class="footer-links">
                     <li><a href="#problem">About</a></li>
                     <li><a href="roadmap.html">Roadmap</a></li>
                     <li><a href="#features">Pricing</a></li>
                     <li><a href="#solution">Contact</a></li>
                 </ul>
             </div>
-            <div class="footer-col">
+            <div class="footer-section">
                 <h4>Legal</h4>
-                <ul>
+                <ul class="footer-links">
                     <li><a href="#">Privacy Policy</a></li>
                     <li><a href="#">Terms of Service</a></li>
                     <li><a href="#">Cookie Policy</a></li>

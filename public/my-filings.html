@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Filings - Patent Filing Platform</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="app-page">
+
+<!-- NAVIGATION -->
+<nav class="app-navbar">
+  <div class="nav-container">
+    <a href="home.html" class="nav-logo"><span class="logo-icon">P</span> Patent Platform</a>
+    <div class="nav-tabs">
+      <a href="file-patent.html" class="nav-tab">
+        <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+        File Patent
+      </a>
+      <a href="legal-help.html" class="nav-tab">
+        <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"/></svg>
+        Legal Help
+      </a>
+      <a href="manage-patents.html" class="nav-tab">
+        <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+        Manage Patents
+      </a>
+      <a href="search-patents.html" class="nav-tab">
+        <svg class="tab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+        Search Patents
+      </a>
+    </div>
+    <div class="nav-user">
+      <span id="userName">User</span>
+      <button onclick="logout()" class="btn-logout">Logout</button>
+    </div>
+  </div>
+</nav>
+
+<!-- MAIN CONTENT -->
+<main class="app-main">
+  <div class="app-container">
+    <div class="page-header">
+      <h1>
+        <svg class="help-icon" style="width:48px;height:48px;display:inline-block;vertical-align:middle;margin-right:12px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+        </svg>
+        <span style="background: linear-gradient(135deg, #4F46E5, #7C3AED); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">My Filings</span>
+      </h1>
+      <p>All filings you've created. We show local drafts and server filings.</p>
+    </div>
+
+    <div class="search-section" style="margin-bottom:24px;">
+      <div class="search-box-large">
+        <input id="searchInput" type="text" placeholder="Search filings by title..." />
+        <button class="btn-search" onclick="filterFilings()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+          Search
+        </button>
+      </div>
+      <div class="search-tips"><strong>Tip:</strong> Try keywords from your title or abstract.</div>
+    </div>
+
+    <div class="recent-filings" style="margin-bottom:24px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+        <h2>All Filings</h2>
+        <a href="wizard.html" class="btn-primary" style="text-decoration:none;display:inline-flex;align-items:center;gap:8px;padding:12px 18px;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px;"><path d="M12 5v14M5 12h14"/></svg>
+          New Filing
+        </a>
+      </div>
+      <div id="filingsList" class="filings-list">
+        <p class="empty-state">No filings yet. Start your first filing above!</p>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script src="app.js"></script>
+<script>
+// Ensure auth
+checkAuth();
+
+let ALL_FILINGS = [];
+
+function normalizeApiFiling(f) {
+  return {
+    id: f._id || f.id || `api-${Math.random().toString(36).slice(2)}`,
+    title: f.title || 'Untitled Filing',
+    abstract: f.abstract || '',
+    problem: f.problem || '',
+    audience: f.audience || '',
+    description: f.description || '',
+    claims: f.claims || '',
+    status: f.status || 'submitted',
+    filedDate: f.createdAt || f.filedDate || new Date().toISOString(),
+    category: f.category || 'General'
+  };
+}
+
+function normalizeLocalFiling(f) {
+  return {
+    id: f.id || `local-${Math.random().toString(36).slice(2)}`,
+    title: f.title || 'Untitled Filing',
+    abstract: f.abstract || '',
+    problem: f.problem || '',
+    audience: f.audience || '',
+    description: f.description || '',
+    claims: f.claims || '',
+    status: f.status || 'submitted',
+    filedDate: f.filedDate || new Date().toISOString(),
+    category: f.category || 'General'
+  };
+}
+
+async function loadAllFilings() {
+  const token = localStorage.getItem('token');
+  const filingsList = document.getElementById('filingsList');
+  filingsList.innerHTML = '<p class="empty-state">Loading filings...</p>';
+
+  let apiFilings = [];
+  try {
+    const res = await fetch('/api/filing/list', { headers: { Authorization: `Bearer ${token}` } });
+    if (res.ok) {
+      const data = await res.json();
+      if (data && Array.isArray(data.filings)) {
+        apiFilings = data.filings.map(normalizeApiFiling);
+      }
+    }
+  } catch (e) {
+    console.warn('API filings load failed, will use local only.');
+  }
+
+  const localList = JSON.parse(localStorage.getItem('demoPatents') || '[]');
+  const localFilings = localList.map(normalizeLocalFiling);
+
+  // Merge by id (prefer API version)
+  const map = new Map();
+  for (const f of localFilings) map.set(f.id, f);
+  for (const f of apiFilings) map.set(f.id, f);
+
+  ALL_FILINGS = Array.from(map.values()).sort((a,b) => new Date(b.filedDate) - new Date(a.filedDate));
+  renderFilings(ALL_FILINGS);
+}
+
+function renderFilings(list) {
+  const filingsList = document.getElementById('filingsList');
+  if (!list || list.length === 0) {
+    filingsList.innerHTML = '<p class="empty-state">No filings yet. Start your first filing above!</p>';
+    return;
+  }
+  filingsList.innerHTML = list.map(filing => {
+    const statusClass = filing.status === 'approved' ? 'status-approved' :
+                        filing.status === 'reviewing' ? 'status-reviewing' : 'status-submitted';
+    const statusText = filing.status === 'approved' ? 'Approved' :
+                      filing.status === 'reviewing' ? 'Under Review' : 'Submitted';
+    const dateStr = new Date(filing.filedDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    return `
+      <div class="filing-item">
+        <div class="filing-info">
+          <h3>${filing.title}</h3>
+          <p>${filing.abstract ? filing.abstract.substring(0, 140) : 'Patent application' }...</p>
+          <div class="filing-meta">
+            <span class="filing-date">
+              <svg style="width: 16px; height: 16px; display: inline-block; vertical-align: middle; margin-right: 4px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg>
+              ${dateStr}
+            </span>
+            ${filing.category ? `<span class="filing-category">${filing.category}</span>` : ''}
+          </div>
+        </div>
+        <span class="filing-status ${statusClass}">${statusText}</span>
+      </div>
+    `;
+  }).join('');
+}
+
+function filterFilings() {
+  const q = (document.getElementById('searchInput').value || '').toLowerCase();
+  if (!q) return renderFilings(ALL_FILINGS);
+  const filtered = ALL_FILINGS.filter(f =>
+    (f.title && f.title.toLowerCase().includes(q)) ||
+    (f.abstract && f.abstract.toLowerCase().includes(q))
+  );
+  renderFilings(filtered);
+}
+
+// init
+(function init(){
+  const user = JSON.parse(localStorage.getItem('user') || '{"name":"User"}');
+  const nameEl = document.getElementById('userName');
+  if (nameEl && user && user.name) nameEl.textContent = user.name;
+  loadAllFilings();
+})();
+</script>
+</body>
+</html>
